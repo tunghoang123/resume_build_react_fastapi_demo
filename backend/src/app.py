@@ -39,7 +39,8 @@ class ResumeRequest(BaseModel):
     position: str   # ポディション
     mission: str    # ミッション
     role: str       # 役割
-    # appeal: str = None     # アピールポイント
+    appeal: str = ''     # アピールポイント
+    skill: str = ''     # 保有スキル
 
 
 @app.get("/")
@@ -57,10 +58,12 @@ def make_resume(resume_request: ResumeRequest):
         'job': resume_request.job,
         'position': resume_request.position,
         'mission': resume_request.mission,
-        'domain': resume_request.role
+        'domain': resume_request.role,
+        'appeal': resume_request.appeal,
+        'skill': resume_request.skill,
     }
 
-    use_gpt_version = GPT35_DEPLOYMENT_NAME
+    use_gpt_version = GPT4_DEPLOYMENT_NAME
     prompt = make_prompt(prompt_file, prompt_params)
     resume_text = call_gpt(openai, use_gpt_version, prompt)  # ここでたまにKeyError: 'content'のエラーが出るのでハンドル。
     if resume_text == 'error':
@@ -80,7 +83,6 @@ def make_resume(resume_request: ResumeRequest):
         'text': resume_text
     }
 
-    use_gpt_version = GPT35_DEPLOYMENT_NAME
     prompt = make_prompt(prompt_file, prompt_params)
     advice_text = call_gpt(openai, use_gpt_version, prompt)
     print(advice_text, use_gpt_version)
@@ -93,9 +95,8 @@ def make_resume(resume_request: ResumeRequest):
     }
     prompt = make_prompt(prompt_file, prompt_params)
 
-    use_gpt_version = GPT35_DEPLOYMENT_NAME
     final_resume_text = call_gpt(openai, use_gpt_version, prompt)
-    print(final_resume_text)
+    print(final_resume_text, use_gpt_version)
     end_time = time.time()
 
     return {

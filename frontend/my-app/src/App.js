@@ -20,7 +20,9 @@ function App() {
     job: '',
     position: '',
     mission: '',
-    role: ''
+    role: '',
+    appeal: '',
+    skill: '',
   });
   const [response, setResponse] = useState(null);
 
@@ -53,6 +55,8 @@ const handleSubmit = async () => {
       <TextField label="Position" variant="outlined" name="position" onChange={handleChange} />
       <TextField label="Mission" variant="outlined" name="mission" onChange={handleChange} />
       <TextField label="Role" style={{ width: '1000px'}} variant="outlined" name="role" onChange={handleChange} /><br></br>
+      <TextField label="Appeal" style={{ width: '1900px'}} variant="outlined" name="appeal" onChange={handleChange} /><br></br>
+      <TextField label="skill" style={{ width: '1900px'}} variant="outlined" name="skill" onChange={handleChange} /><br></br>
       <Button variant="contained" color="primary" onClick={handleSubmit}>
         レジュメ生成！
       </Button>
